@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습 1: DOM 스타일 변환기</title>
+
+    <!-- D-Day 스타일(css)만 적용 -->
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        // 1. 글자색 변경 함수
+        function changeColor() {
+            var obj = document.getElementById("target");
+            obj.style.color = "white";
+        }
+
+        // 2. 글자 크기 변경 함수 (32px)
+        function changeSize() {
+            var obj = document.getElementById("target");
+            obj.style.fontSize = "32px";
+        }
+
+        // 3. 배경색 변경 함수 (Yellow)
+        function changeBackground() {
+            var obj = document.getElementById("target");
+            obj.style.backgroundColor = "black";
+        }
+
+        // 4. 숨기기/보이기 토글 함수
+        function toggleVisibility() {
+            var obj = document.getElementById("target");
+
+            if (obj.style.display === "none") {
+                obj.style.display = "block";
+            } else {
+                obj.style.display = "none";
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+<header>
+  <h1>장준수 홈페이지</h1>
+  <p class="subtitle">한 줄 소개: 대학교 재학중인 장준수입니다</p>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<main class="container">
+
+<section>
+    <h3>실습 1: DOM 스타일 제어하기</h3>
+    <hr>
+
+    <!-- 변경 대상 문장 -->
+    <p id="target">이 문장의 스타일을 바꿔보세요!</p>
+
+    <br>
+
+    <!-- 제어 버튼들 -->
+    <button onclick="changeColor()">글자색 변경</button>
+    <button onclick="changeSize()">크게 보기</button>
+    <button onclick="changeBackground()">배경 강조</button>
+    <button onclick="toggleVisibility()">숨기기/보이기</button>
+</section>
+
+</main>
+
+<footer>
+  <small>&copy; <span id="year"></span> 이름: (여기에 추가)</small>
+</footer>
+
+<script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습 2: 댓글 추가/삭제하기</title>
+
+    <!-- 여기서 아래 style.css 파일에
+         너가 준 공통 스타일 코드(변수, header/nav/container 등)를 넣어두면 됨 -->
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        // 댓글 추가 함수
+        function addComment() {
+            // 1. 사용자 입력 받기
+            var inputStr = prompt("추가할 댓글 내용을 입력하세요:", "오늘 수업 너무 재밌어요!");
+
+            // 취소 버튼을 누르거나 내용이 없으면 종료
+            if (inputStr == null || inputStr.trim() == "") {
+                return;
+            }
+
+            // 2. 부모 요소(ul) 찾기
+            var parent = document.getElementById("commentList");
+
+            // 3. 새로운 요소(li) 생성 및 내용 채우기
+            var newLi = document.createElement("li");
+            newLi.innerHTML = inputStr;
+
+            // 4. 클릭 시 삭제되는 이벤트 리스너 등록
+            newLi.onclick = function () {
+                var p = this.parentElement; // 부모(ul) 찾기
+                p.removeChild(this);        // 삭제
+            };
+
+            // 5. 트리에 추가
+            parent.appendChild(newLi);
+        }
+    </script>
+</head>
+
+<body onload="addComment()">
+
+<header>
+  <h1>장준수 홈페이지</h1>
+  <p class="subtitle">한 줄 소개: 대학교 재학중인 장준수입니다</p>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<main class="container">
+  <section>
+    <h2>실습 2: 댓글 추가/삭제 프로그램</h2>
+    <p>아래 목록을 클릭하면 해당 항목이 삭제됩니다.</p>
+    <hr>
+
+    <button onclick="addComment()">+ 댓글 추가하기</button>
+
+    <!-- 댓글이 들어갈 목록 -->
+    <ul id="commentList">
+      <!-- 자바스크립트로 여기에 li가 추가됩니다 -->
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <small>&copy; <span id="year"></span> 이름: (여기에 추가)</small>
+</footer>
+
+<script src="script.js"></script>
+</body>
+
+</html>
