@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>실습 6: 키보드 자동차</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      height: 100vh;
+      overflow: hidden; /* 스크롤 방지 */
+    }
+
+    #car {
+      position: absolute;
+      left: 100px;
+      top: 100px;
+      width: 80px;
+      height: 40px;
+      background-color: violet;
+      border: 2px solid black;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      line-height: 40px;
+    }
+
+    #info {
+      position: fixed;
+      bottom: 20px; left: 20px;
+      padding: 10px;
+      background: #eee;
+      border: 1px solid #aaa;
+    }
+  </style>
+
+  <script>
+    var x = 100;
+    var y = 100;
+    var step = 10; // 이동 거리
+
+    window.onload = function () {
+      var car = document.getElementById("car");
+      var info = document.getElementById("info");
+
+      document.onkeydown = function (e) {
+        switch (e.keyCode) {
+          case 37: x -= step; break; // 왼쪽
+          case 38: y -= step; break; // 위쪽
+          case 39: x += step; break; // 오른쪽
+          case 40: y += step; break; // 아래쪽
+        }
+
+        car.style.left = x + "px";
+        car.style.top = y + "px";
+
+        info.innerHTML = "현재 좌표 (x, y) = (" + x + ", " + y + ")";
+      }
+    }
+  </script>
+
+</head>
+<body>
+
+  <header>
+    <h1>장준수 홈페이지</h1>
+    <p class="subtitle">한 줄 소개: 대학교 재학중인 장준수입니다</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main class="container">
+    <section>
+      <h2>실습 6: 키보드 자동차</h2>
+      <p>방향키(←, ↑, →, ↓)를 눌러 자동차를 움직여 보세요.</p>
+    </section>
+
+    <div id="car">Car</div>
+    <div id="info">현재 좌표 (x, y) = (100, 100)</div>
+  </main>
+
+  <footer>
+    <small>&copy; <span id="year"></span> 장준수</small>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
