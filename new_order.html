@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
-  <title>실습 5: 스마트 피자 주문서</title>
-  <!-- 공통 스타일 -->
+  <title>스마트 피자 주문서</title>
   <link rel="stylesheet" href="style.css">
 
   <style>
-  #menu_box {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    background: #fafafa;
-  }
+    #menu_box {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      background: #fafafa;
+    }
 
-  #menu_box div {
-    margin-bottom: 6px;
-  }
+    #menu_box div {
+      margin-bottom: 6px;
+    }
 
-  /* 수량 입력칸 크게 보이도록 조정 */
-  .menu-qty {
-    width: 60px;
-    padding: 4px;
-    font-size: 1rem;
-  }
-</style>
+    /* 수량 입력칸이 추가 설정 없이는 숫자가 보이지 않습니다! */
+    .menu-qty {
+      width: 60px;
+      padding: 4px;
+      font-size: 1rem;
+    }
+  </style>
 
   <script>
-    /* 기능 1: 가격 계산 함수 */
+   
     function recalc() {
       var total = 0;
       var checks = document.getElementsByClassName("menu-check");
@@ -48,7 +48,7 @@
       document.getElementById("total").value = total;
     }
 
-    /* 기능 2: 주소 입력 확인 */
+
     function checkAddress() {
       var addr = document.getElementById("addr");
       if (addr.value === "") {
@@ -57,9 +57,18 @@
       }
     }
 
-    /* 기능 3: 주문 전송 제어 */
+    // 추가사항 - 주소와 값 입력의 안전성을 확보. 주소 미입력시 무한 루프를 막기 위해 html 주소입력칸과 같이 수정했습니다!
     function validate(e) {
-      var total = parseInt(document.getElementById("total").value);
+      var addr = document.getElementById("addr").value.trim();
+
+      var total = parseInt(document.getElementById("total").value, 10) || 0;
+
+      if (addr === "") {
+        alert("배달 받으실 주소를 입력해주세요!");
+        document.getElementById("addr").focus();
+        e.preventDefault();
+        return false;
+      }
 
       if (total === 0) {
         alert("상품을 적어도 하나는 선택해야 주문 가능합니다.");
@@ -68,20 +77,17 @@
       }
 
       alert("주문이 완료되었습니다! (총 결제금액: " + total + "원)");
-      e.preventDefault();   // 실제 서버 전송은 막고 알림만
+      e.preventDefault(); 
       return false;
     }
   </script>
 </head>
-<body>
 
-  <!-- 공통 헤더 -->
+<body>
   <header>
     <h1>장준수 홈페이지</h1>
     <p class="subtitle">한 줄 소개: 대학교 재학중인 장준수입니다</p>
   </header>
-
-  <!-- 공통 내비게이션 -->
   <nav>
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -89,7 +95,6 @@
     <a href="contact.html">Contact</a>
   </nav>
 
-  <!-- 메인 컨테이너 -->
   <main class="container">
     <section>
       <h2>실습 5: 스마트 피자 주문서</h2>
@@ -103,34 +108,34 @@
           <div>
             <input type="checkbox" class="menu-check" value="15000" onchange="recalc()">
             콤비네이션 피자 (15,000원)
-            <input type="number" class="menu-qty" value="1" min="1"
-                   style="width: 40px;" onchange="recalc()" onkeyup="recalc()"> 개
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 40px;" onchange="recalc()"
+              onkeyup="recalc()"> 개
           </div>
 
           <div>
             <input type="checkbox" class="menu-check" value="12000" onchange="recalc()">
             페퍼로니 피자 (12,000원)
-            <input type="number" class="menu-qty" value="1" min="1"
-                   style="width: 40px;" onchange="recalc()" onkeyup="recalc()"> 개
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 40px;" onchange="recalc()"
+              onkeyup="recalc()"> 개
           </div>
 
           <div>
             <input type="checkbox" class="menu-check" value="2000" onchange="recalc()">
             치즈 토핑 추가 (2,000원)
-            <input type="number" class="menu-qty" value="1" min="1"
-                   style="width: 40px;" onchange="recalc()" onkeyup="recalc()"> 개
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 40px;" onchange="recalc()"
+              onkeyup="recalc()"> 개
           </div>
 
           <div>
             <input type="checkbox" class="menu-check" value="1500" onchange="recalc()">
             콜라 1.25L (1,500원)
-            <input type="number" class="menu-qty" value="1" min="1"
-                   style="width: 40px;" onchange="recalc()" onkeyup="recalc()"> 개
+            <input type="number" class="menu-qty" value="1" min="1" style="width: 40px;" onchange="recalc()"
+              onkeyup="recalc()"> 개
           </div>
         </div>
 
         <label for="addr">배달 주소:</label>
-        <input type="text" id="addr" size="50" onblur="checkAddress()" placeholder="주소를 입력하세요">
+        <input type="text" id="addr" size="50" placeholder="주소를 입력하세요">
         <br><br>
 
         주문 합계:
@@ -143,12 +148,13 @@
     </section>
   </main>
 
-  <!-- 공통 푸터 -->
+
   <footer>
     <small>&copy; <span id="year"></span> 장준수</small>
   </footer>
 
-  <!-- 연도 자동 출력용 -->
+
   <script src="script.js"></script>
 </body>
+
 </html>

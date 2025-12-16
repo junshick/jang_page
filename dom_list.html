@@ -2,78 +2,75 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>실습 2: 댓글 추가/삭제하기</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>댓글 추가/삭제하기</title>
+  <link rel="stylesheet" href="style.css">
 
-    <!-- 여기서 아래 style.css 파일에
-         너가 준 공통 스타일 코드(변수, header/nav/container 등)를 넣어두면 됨 -->
-    <link rel="stylesheet" href="style.css">
+  <script>      // addComment 함수에 count 개수 세는 기능을 추가 구현하였습니다! - 댓글 개수를 셀 수 있게되었습니다!
+    function addComment() {
+      var inputStr = prompt("추가할 댓글 내용을 입력하세요:", "오늘 수업 너무 재밌어요!");
 
-    <script>
-        // 댓글 추가 함수
-        function addComment() {
-            // 1. 사용자 입력 받기
-            var inputStr = prompt("추가할 댓글 내용을 입력하세요:", "오늘 수업 너무 재밌어요!");
+      if (inputStr == null || inputStr.trim() == "") {
+        return;
+      }
 
-            // 취소 버튼을 누르거나 내용이 없으면 종료
-            if (inputStr == null || inputStr.trim() == "") {
-                return;
-            }
+      var parent = document.getElementById("commentList");
+      var newLi = document.createElement("li");
 
-            // 2. 부모 요소(ul) 찾기
-            var parent = document.getElementById("commentList");
+      newLi.textContent = inputStr;   // 안전하게 텍스트로 처리
 
-            // 3. 새로운 요소(li) 생성 및 내용 채우기
-            var newLi = document.createElement("li");
-            newLi.innerHTML = inputStr;
+      newLi.onclick = function () {
+        var p = this.parentElement;
+        p.removeChild(this);
+        updateCount();
+      };
 
-            // 4. 클릭 시 삭제되는 이벤트 리스너 등록
-            newLi.onclick = function () {
-                var p = this.parentElement; // 부모(ul) 찾기
-                p.removeChild(this);        // 삭제
-            };
+      parent.appendChild(newLi);
+      updateCount();
+    }
 
-            // 5. 트리에 추가
-            parent.appendChild(newLi);
-        }
-    </script>
+    // updateCount() 는 count 개수를 갱신하는 함수입니다! 댓글 개수를 셀 때 필요한 추가 구현 함수입니다!
+    function updateCount() {
+      var parent = document.getElementById("commentList");
+      document.getElementById("count").textContent = parent.children.length;
+    }
+  </script>
 </head>
 
 <body onload="addComment()">
 
-<header>
-  <h1>장준수 홈페이지</h1>
-  <p class="subtitle">한 줄 소개: 대학교 재학중인 장준수입니다</p>
-</header>
+  <header>
+    <h1>장준수 홈페이지</h1>
+    <p class="subtitle">한 줄 소개: 대학교 재학중인 장준수입니다</p>
+  </header>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="portfolio.html">Portfolio</a>
-  <a href="contact.html">Contact</a>
-</nav>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 
-<main class="container">
-  <section>
-    <h2>실습 2: 댓글 추가/삭제 프로그램</h2>
-    <p>아래 목록을 클릭하면 해당 항목이 삭제됩니다.</p>
-    <hr>
+  <main class="container">
+    <section>
+      <h2>실습 2: 댓글 추가/삭제 프로그램</h2>
+      <p>아래 목록을 클릭하면 해당 항목이 삭제됩니다.</p>
+      <p>댓글 수: <span id="count">0</span></p>
+      <hr>
 
-    <button onclick="addComment()">+ 댓글 추가하기</button>
+      <button onclick="addComment()">+ 댓글 추가하기</button>
 
-    <!-- 댓글이 들어갈 목록 -->
-    <ul id="commentList">
-      <!-- 자바스크립트로 여기에 li가 추가됩니다 -->
-    </ul>
-  </section>
-</main>
+      <ul id="commentList">
+      </ul>
+    </section>
+  </main>
 
-<footer>
-  <small>&copy; <span id="year"></span> 이름: (여기에 추가)</small>
-</footer>
+  <footer>
+    <small>&copy; <span id="year"></span> 이름: 장준수</small>
+  </footer>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>

@@ -2,27 +2,30 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>실습 6: 키보드 자동차</title>
+  <title>키보드 자동차</title>
   <link rel="stylesheet" href="style.css">
 
   <style>
     body {
       height: 100vh;
-      overflow: hidden; /* 스크롤 방지 */
+      overflow: hidden; 
     }
 
+    /*추가사항 - car 이미지가 없어서 car.png를 추가하여 진짜 자동차를 움직이는 것처럼 보이게 수정했습니다!*/
     #car {
       position: absolute;
       left: 100px;
       top: 100px;
-      width: 80px;
-      height: 40px;
-      background-color: violet;
-      border: 2px solid black;
-      color: white;
-      font-weight: bold;
-      text-align: center;
-      line-height: 40px;
+      width: 100px;   
+      height: 100px;  
+      user-select: none;
+      pointer-events: none; 
+    }
+
+    #car img {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
     #info {
@@ -33,30 +36,60 @@
       border: 1px solid #aaa;
     }
   </style>
-
+  
   <script>
+    // 추가사항 - 화면 밖을 나가지 못하도록 하는 함수와 추가 서브기능들을 구현 해놓았습니다!
     var x = 100;
     var y = 100;
-    var step = 10; // 이동 거리
+    var step = 20; // 이동 거리
+
+    // 화면 밖을 제한합니다!
+    function map_Max(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
 
     window.onload = function () {
       var car = document.getElementById("car");
       var info = document.getElementById("info");
 
-      document.onkeydown = function (e) {
-        switch (e.keyCode) {
-          case 37: x -= step; break; // 왼쪽
-          case 38: y -= step; break; // 위쪽
-          case 39: x += step; break; // 오른쪽
-          case 40: y += step; break; // 아래쪽
-        }
+      function updatePosition() {
+        // 최대 이동 거리를 계산합니다. car 크기값을 빼줘야하는게 중요합니다!
+        var carW = car.offsetWidth;
+        var carH = car.offsetHeight;
+
+        var maxX = window.innerWidth - carW;
+        var maxY = window.innerHeight - carH;
+
+        // 0과 max값을 정하여 이동을 제한합니다!
+        x = map_Max(x, 0, maxX);
+        y = map_Max(y, 0, maxY);
 
         car.style.left = x + "px";
         car.style.top = y + "px";
 
         info.innerHTML = "현재 좌표 (x, y) = (" + x + ", " + y + ")";
       }
-    }
+
+      updatePosition();
+
+      document.addEventListener("keydown", function (e) {
+        if (["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"].includes(e.key)) {
+          e.preventDefault();
+        }
+
+        switch (e.key) {
+          case "ArrowLeft":  x -= step; break;
+          case "ArrowUp":    y -= step; break;
+          case "ArrowRight": x += step; break;
+          case "ArrowDown":  y += step; break;
+        }
+
+        updatePosition();
+      });
+
+      // 창 크기 변경시 resize도 변경합니다!
+      window.addEventListener("resize", updatePosition);
+    };
   </script>
 
 </head>
@@ -73,14 +106,17 @@
     <a href="portfolio.html">Portfolio</a>
     <a href="contact.html">Contact</a>
   </nav>
-
+  
   <main class="container">
     <section>
       <h2>실습 6: 키보드 자동차</h2>
       <p>방향키(←, ↑, →, ↓)를 눌러 자동차를 움직여 보세요.</p>
     </section>
 
-    <div id="car">Car</div>
+    <div id="car">
+      <img src="car.png" alt="car">
+    </div>
+
     <div id="info">현재 좌표 (x, y) = (100, 100)</div>
   </main>
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>D-Day 계산기</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>장준수 홈페이지</h1>
+  <p class="subtitle">한 줄 소개: 대학교 재학중인 장준수입니다</p>
+</header>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="contact.html">Contact</a>
+</nav>
+<main class="container">
+<section>
+  <h2>Date 객체 활용: D-Day 계산기</h2>
+  
+  <script>
+    let now = new Date(); 
+
+    let year = prompt("목표 연도를 입력하세요 (예: 2025)", "2025");
+    let month = prompt("목표 월을 입력하세요 (1~12)", "12");
+    let day = prompt("목표 일을 입력하세요 (1~31)", "25");
+
+    if (!year || !month || !day) {
+      document.write("<h3>D-Day 계산을 취소했습니다.</h3>");
+    } else {
+      let targetDate = new Date(year, month - 1, day); 
+
+      let diffMs = targetDate.getTime() - now.getTime();
+
+      let diffDay = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+      document.write("<h3>목표 날짜: " + targetDate.toLocaleString() + "</h3>"); 
+
+      if (diffDay === 0) {
+        document.write("<h3> D-Day 입니다!</h3>");
+      } else if (diffDay > 0) {
+        document.write("<h3> D-" + diffDay + "일 남았습니다.</h3>");
+      } else {
+        document.write("<h3> D+" + Math.abs(diffDay) + "일 지났습니다.</h3>"); 
+      }
+
+      document.write("<hr>");
+      document.write("<p>오늘 날짜: " + now.toLocaleString() + "</p>");
+      document.write("<p><i>새로고침(F5)을 눌러 다시 계산할 수 있습니다.</i></p>");
+    }
+  </script>
+
+</section>
+</main>
+<footer>
+  <small>&copy; <span id="year"></span> 이름: 장준수</small>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
